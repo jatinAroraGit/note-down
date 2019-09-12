@@ -1,16 +1,32 @@
 <!doctype html>
 <html>
+    
     <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="./main.css">
         <meta charset="utf-8">
-        <title>My Web Page</title>
+        <title>Note Down</title>
     </head>
 
     <body>
-        <!-- This is a comment -->
-        <div contenteditable="true" id="editor">
-        <h1>Hello World!</h1>
+        
+            <nav class="navbar navbar-light navbar-toggler bg-light">
+                    <form class="form-inline">
+                        <h1 id="title">NOTE DOWN</h1>
+                    
+                    </form>
+                    <button class="btn btn-outline-success pull-right" type="button">Save All</button>
+                    
+                  </nav>
+                  <p>&nbsp;Use Alt + S to Save the Note. Autosave enabled (Every 5 seconds)</p>
+        <div  contenteditable="true" id="editor">
+       
     </div>
+  
     </body>
+   
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
     <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
     <script>
     const fs = new Filer.FileSystem();
@@ -25,7 +41,22 @@
             document.querySelector('#editor').innerHTML = data;
         }
     })
+   
    var autosave =  setInterval(setInterval(function() {
+   //saveNote();
+   /* fs.writeFile("/note",document.querySelector('#editor').innerHTML, function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    else 
+    console.log("SAVED !");
+    }); 
+    */
+}, 5000));
+
+
+function saveNote(){
+    console.log("Saving...");
     fs.writeFile("/note",document.querySelector('#editor').innerHTML, function(err) {
     if(err) {
         return console.log(err);
@@ -33,9 +64,18 @@
     else 
     console.log("SAVED !");
     }); 
-}, 5000));
+}
+hotkeys.filter = function(event) {
+  var tagName = (event.target || event.srcElement).tagName;
+  return !(tagName.isContentEditable || tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
+}
+hotkeys('alt+s', function (event, handler){
+saveNote();
+alert('Note Saved');
 
+  });
 });
+
 
      </script>
 </html>
