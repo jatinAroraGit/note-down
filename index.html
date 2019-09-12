@@ -45,15 +45,8 @@
         })
 
         var autosave = setInterval(setInterval(function () {
-            //saveNote();
-            /* fs.writeFile("/note",document.querySelector('#editor').innerHTML, function(err) {
-             if(err) {
-                 return console.log(err);
-             }
-             else 
-             console.log("SAVED !");
-             }); 
-             */
+            saveNote();
+           
         }, 5000));
 
         function saveNote() {
