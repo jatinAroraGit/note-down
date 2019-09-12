@@ -7,6 +7,35 @@
 
     <body>
         <!-- This is a comment -->
+        <div contenteditable="true" id="editor">
         <h1>Hello World!</h1>
+    </div>
     </body>
+    <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+    <script>
+    const fs = new Filer.FileSystem();
+    window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    fs.readFile('/note', 'utf8', function(err, data) {
+        if(err){
+            document.querySelector('#editor').innerHTML = "Welocome To My Notepad" 
+        }
+        else
+         if(data) {
+            document.querySelector('#editor').innerHTML = data;
+        }
+    })
+   var autosave =  setInterval(setInterval(function() {
+    fs.writeFile("/note",document.querySelector('#editor').innerHTML, function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    else 
+    console.log("SAVED !");
+    }); 
+}, 5000));
+
+});
+
+     </script>
 </html>
